@@ -1,0 +1,13 @@
+.restaurant-details {
+  list-style: none;
+  border: 5px;
+  background-color: #DDDDDD;
+  padding: 21px;
+  border-radius: 9px;
+}
+
+ul.results {
+	margin-left: 0;
+}
+
+.number-of-results { text-align: center;}

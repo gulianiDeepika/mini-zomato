@@ -1,0 +1,171 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Mini Tomato</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="miniZomatoApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div ng-controller="MainCtrl">
+      <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+         <div class="navbar-header">
+            <a class="navbar-brand" href="#">Tomato</a>
+          </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <form class="navbar-form navbar-right" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+        </div>
+      </div>
+      </nav>
+
+        <div class="container-fluid center" ng-hide="loadedData">
+            <div>Loading data</div>
+        </div>
+        <div class="container-fluid" ng-show="loadedData" ng-cloak>
+            <div class="col-md-3 filter-container">
+                <div class="establishment-filter">
+                  <label class="filter-label">Establishment Type</label>
+                  <div ng-hide="establishment">
+                    <select class="form-control" ng-model="establishment" ng-options="e as e for e in establishmentFilters">
+                        <option value="">--Select--</option>
+                    </select>
+                  </div>
+                  <div class="alert alert-info" ng-show="establishment">
+                    <a href="#" class="close" ng-click="establishment = undefined">&times;</a>
+                    {{establishment}}
+                  </div>
+                </div>
+              <div class="cost-filter">
+                <label class="filter-label">Cost </label>
+                <div ng-hide="cost">
+                  <select class="form-control" ng-model="cost" ng-options="c as c for c in costFilterOptions">
+                    <option value="">--Select--</option>
+                  </select>
+                </div>
+                <div class="alert alert-info" ng-show="cost">
+                  <a href="#" class="close" ng-click="cost = undefined">&times;</a>
+                  {{cost}}
+                </div>
+              </div>
+
+              <div class="cuisine-filter">
+                <label class="filter-label">Cusines</label> 
+                <div ng-hide="cusine">
+                  <select class="form-control" ng-model="cusine" ng-options="c as c for c in cusines">
+                    <option value="">--Select--</option>
+                  </select>
+                </div>
+                <div class="alert alert-info" ng-show="cusine">
+                  <a href="#" class="close" ng-click="cusine = undefined">&times;</a>
+                  {{cusine}}
+                </div>
+              </div>
+
+              <div class="feature-filter">
+                <label class="filter-label">Features</label>
+                <div ng-hide="feature">
+                  <select class="form-control" ng-model="feature" ng-options="f as f for f in features">
+                  <option value="">--Select--</option>
+                  </select>
+                </div>
+                <div class="alert alert-info" ng-show="feature">
+                  <a href="#" class="close" ng-click="feature = undefined">&times;</a>
+                  {{feature}}
+                </div>
+              </div>
+              <div class="payment-filter">
+                <label class="filter-label">Payment Mode</label>
+                <div ng-hide="payment"> 
+                <select class="form-control" ng-model="payment" ng-options="f as f for f in paymentMode">
+                  <option value="">--Select--</option>
+                  </select>
+                </div>
+                 <div class="alert alert-info" ng-show="payment">
+                  <a href="#" class="close" ng-click="payment = undefined">&times;</a>
+                  {{payment}}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-9 restaurant-filter-results">
+                <div ng-show="filteredRestaurants.length == 0">No results found</div>
+                <div class="number-of-results text-primary">
+                    <span class="center-block"><strong>{{filteredRestaurants.length}}</strong></span>
+                  </div>
+                <ul ng-repeat="r in filteredRestaurants|orderBy:'-rating'" class="results">
+                  <li class="restaurant-details row" id="{{$index}}">
+                      <div class="name">{{r.details[0]}}</div>
+                      <div class="address">{{r.details[1]}}</div>
+                      <div class="rating pull-right btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Very Good">{{r.rating}}</div>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/firebase/firebase.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/angularfire/config.js"></script>
+        <script src="scripts/angularfire/firebase.utils.js"></script>
+        <script src="scripts\controllers\chat.js"></script>
+        <script src="scripts\filters\reverse.js"></script>
+        <script src="scripts/services/data.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
